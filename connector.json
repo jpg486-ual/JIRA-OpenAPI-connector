@@ -1,0 +1,294 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Jira Read-Only API",
+    "description": "Custom connector for Jira Cloud providing read-only operations for issues, projects, comments, users, statuses, types, transitions, changelog and JQL search.",
+    "version": "1.0"
+  },
+  "host": "domain.atlassian.net",
+  "basePath": "/rest/api/3",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/issue/{issueIdOrKey}": {
+      "get": {
+        "summary": "Get issue details",
+        "description": "Retrieve full details of a Jira issue.",
+        "operationId": "GetIssue",
+        "parameters": [
+          {
+            "name": "issueIdOrKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "default": "*"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issue retrieved"
+          }
+        }
+      }
+    },
+    "/issue/{issueIdOrKey}/comment": {
+      "get": {
+        "summary": "Get comments for issue",
+        "operationId": "GetIssueComments",
+        "parameters": [
+          {
+            "name": "issueIdOrKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comments retrieved"
+          }
+        }
+      }
+    },
+    "/issue/{issueIdOrKey}/changelog": {
+      "get": {
+        "summary": "Get changelog",
+        "description": "Returns the historical changelog for an issue.",
+        "operationId": "GetChangelog",
+        "parameters": [
+          {
+            "name": "issueIdOrKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Changelog retrieved"
+          }
+        }
+      }
+    },
+    "/issue/{issueIdOrKey}/transitions": {
+      "get": {
+        "summary": "List transitions",
+        "operationId": "ListTransitions",
+        "parameters": [
+          {
+            "name": "issueIdOrKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transitions retrieved"
+          }
+        }
+      }
+    },
+    "/project": {
+      "get": {
+        "summary": "List all projects",
+        "description": "Retrieves all Jira projects available to the user.",
+        "operationId": "ListProjects",
+        "responses": {
+          "200": {
+            "description": "Projects retrieved"
+          }
+        }
+      }
+    },
+    "/project/{projectKey}/statuses": {
+      "get": {
+        "summary": "List project statuses",
+        "operationId": "ProjectStatuses",
+        "parameters": [
+          {
+            "name": "projectKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Statuses retrieved"
+          }
+        }
+      }
+    },
+    "/search/jql": {
+      "get": {
+        "summary": "Search issues (JQL)",
+        "description": "Search issues using a JQL query.",
+        "operationId": "SearchIssues",
+        "parameters": [
+          {
+            "name": "jql",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "ORDER BY created DESC"
+          },
+          {
+            "name": "startAt",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 50
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nextPageToken",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reconcileIssues",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          }
+        }
+      }
+    },
+    "/user/search": {
+      "get": {
+        "summary": "Search users",
+        "operationId": "SearchUsers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved"
+          }
+        }
+      }
+    },
+      "/user/assignable/multiProjectSearch": {
+        "get": {
+          "summary": "Find assignable users for multiple projects",
+          "description": "Returns a list of users assignable to issues in one or more projects.",
+          "operationId": "FindAssignableUsersMultiProject",
+          "parameters": [
+            {
+              "name": "projectKeys",
+              "in": "query",
+              "required": true,
+              "type": "string",
+              "description": "Comma-separated list of project keys."
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "description": "String used to filter users by name/email."
+            },
+            {
+              "name": "startAt",
+              "in": "query",
+              "required": false,
+              "type": "integer",
+              "default": 0
+            },
+            {
+              "name": "maxResults",
+              "in": "query",
+              "required": false,
+              "type": "integer",
+              "default": 50
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Assignable users retrieved"
+            }
+          }
+        }
+      },
+    "/issuetype": {
+      "get": {
+        "summary": "List issue types",
+        "operationId": "ListIssueTypes",
+        "responses": {
+          "200": {
+            "description": "Issue types retrieved"
+          }
+        }
+      }
+    },
+    "/priority": {
+      "get": {
+        "summary": "List priorities",
+        "operationId": "ListPriorities",
+        "responses": {
+          "200": {
+            "description": "Priorities retrieved"
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "List statuses",
+        "operationId": "ListStatuses",
+        "responses": {
+          "200": {
+            "description": "Statuses retrieved"
+          }
+        }
+      }
+    }
+  }
+}
