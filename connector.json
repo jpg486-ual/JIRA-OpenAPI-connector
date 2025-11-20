@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Jira Read-Only API",
-    "description": "Custom connector for Jira Cloud providing read-only operations for issues, projects, comments, users, statuses, types, transitions, changelog and JQL search.",
+    "title": "JIRA API",
+    "description": "JIRA is a software development tool for agile teams to plan, track, and release world-class software. Connecting JIRA issues to the rest of your tools helps break down barriers and unleash the potential of your team.",
     "version": "1.0"
   },
   "host": "domain.atlassian.net",
@@ -67,6 +67,18 @@
         }
       }
     },
+      "/field": {
+        "get": {
+          "summary": "List all fields",
+          "description": "Returns all issue fields, including custom fields.",
+          "operationId": "ListFields",
+          "responses": {
+            "200": {
+              "description": "Fields retrieved"
+            }
+          }
+        }
+      },
     "/issue/{issueIdOrKey}/changelog": {
       "get": {
         "summary": "Get changelog",
@@ -106,14 +118,72 @@
         }
       }
     },
-    "/project": {
+    "/project/search": {
       "get": {
-        "summary": "List all projects",
-        "description": "Retrieves all Jira projects available to the user.",
-        "operationId": "ListProjects",
+        "summary": "Search projects",
+        "description": "Returns a paginated list of projects, with advanced filtering options.",
+        "operationId": "SearchProjects",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "String used to filter projects by name or key."
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Order by field (e.g., key, name)."
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Filter by project category ID."
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter by permitted action."
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Fields to expand in the response."
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter by project status."
+          },
+          {
+            "name": "startAt",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Index of the first item to return."
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Maximum number of results to return."
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Projects retrieved"
+            "description": "Paginated list of projects returned"
           }
         }
       }
@@ -325,9 +395,6 @@
         "responses": {
           "200": {
             "description": "Current user details returned"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         }
       }
