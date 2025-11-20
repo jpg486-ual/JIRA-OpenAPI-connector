@@ -289,6 +289,48 @@
           }
         }
       }
+    },
+    "/attachment/content/{id}": {
+      "get": {
+      "summary": "Get attachment content",
+      "description": "Download the content of an attachment by its ID.",
+        "operationId": "GetAttachmentContent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Attachment ID"
+          }
+        ],
+        "produces": [
+          "application/octet-stream"
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment content returned"
+          },
+          "404": {
+            "description": "Attachment not found"
+          }
+        }
+      }
+    },
+    "/myself": {
+      "get": {
+        "summary": "Get current user details",
+        "description": "Returns details for the currently authenticated user.",
+        "operationId": "GetCurrentUserDetails",
+        "responses": {
+          "200": {
+            "description": "Current user details returned"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
     }
   }
 }
