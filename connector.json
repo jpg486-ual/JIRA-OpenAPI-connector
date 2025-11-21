@@ -6,7 +6,7 @@
     "version": "1.0"
   },
   "host": "domain.atlassian.net",
-  "basePath": "/rest/api/3",
+  "basePath": "/rest/api",
   "schemes": ["https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
@@ -21,7 +21,7 @@
     }
   ],
   "paths": {
-    "/issue/{issueIdOrKey}": {
+    "/3/issue/{issueIdOrKey}": {
       "get": {
         "summary": "Get issue details",
         "description": "Retrieve full details of a Jira issue.",
@@ -48,7 +48,7 @@
         }
       }
     },
-    "/issue/{issueIdOrKey}/comment": {
+    "/3/issue/{issueIdOrKey}/comment": {
       "get": {
         "summary": "Get comments for issue",
         "operationId": "GetIssueComments",
@@ -67,19 +67,19 @@
         }
       }
     },
-      "/field": {
-        "get": {
-          "summary": "List all fields",
-          "description": "Returns all issue fields, including custom fields.",
-          "operationId": "ListFields",
-          "responses": {
-            "200": {
-              "description": "Fields retrieved"
-            }
+    "/3/field": {
+      "get": {
+        "summary": "List all fields",
+        "description": "Returns all issue fields, including custom fields.",
+        "operationId": "ListFields",
+        "responses": {
+          "200": {
+            "description": "Fields retrieved"
           }
         }
-      },
-    "/issue/{issueIdOrKey}/changelog": {
+      }
+    },
+    "/3/issue/{issueIdOrKey}/changelog": {
       "get": {
         "summary": "Get changelog",
         "description": "Returns the historical changelog for an issue.",
@@ -99,7 +99,7 @@
         }
       }
     },
-    "/issue/{issueIdOrKey}/transitions": {
+    "/3/issue/{issueIdOrKey}/transitions": {
       "get": {
         "summary": "List transitions",
         "operationId": "ListTransitions",
@@ -118,7 +118,7 @@
         }
       }
     },
-    "/project/search": {
+    "/3/project/search": {
       "get": {
         "summary": "Search projects",
         "description": "Returns a paginated list of projects, with advanced filtering options.",
@@ -188,7 +188,7 @@
         }
       }
     },
-    "/project/{projectKey}/statuses": {
+    "/3/project/{projectKey}/statuses": {
       "get": {
         "summary": "List project statuses",
         "operationId": "ProjectStatuses",
@@ -207,7 +207,7 @@
         }
       }
     },
-    "/search/jql": {
+    "/3/search/jql": {
       "get": {
         "summary": "Search issues (JQL)",
         "description": "Search issues using a JQL query.",
@@ -266,7 +266,7 @@
         }
       }
     },
-    "/user/search": {
+    "/3/user/search": {
       "get": {
         "summary": "Search users",
         "operationId": "SearchUsers",
@@ -285,49 +285,49 @@
         }
       }
     },
-      "/user/assignable/multiProjectSearch": {
-        "get": {
-          "summary": "Find assignable users for multiple projects",
-          "description": "Returns a list of users assignable to issues in one or more projects.",
-          "operationId": "FindAssignableUsersMultiProject",
-          "parameters": [
-            {
-              "name": "projectKeys",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "description": "Comma-separated list of project keys."
-            },
-            {
-              "name": "query",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "description": "String used to filter users by name/email."
-            },
-            {
-              "name": "startAt",
-              "in": "query",
-              "required": false,
-              "type": "integer",
-              "default": 0
-            },
-            {
-              "name": "maxResults",
-              "in": "query",
-              "required": false,
-              "type": "integer",
-              "default": 50
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Assignable users retrieved"
-            }
+    "/3/user/assignable/multiProjectSearch": {
+      "get": {
+        "summary": "Find assignable users for multiple projects",
+        "description": "Returns a list of users assignable to issues in one or more projects.",
+        "operationId": "FindAssignableUsersMultiProject",
+        "parameters": [
+          {
+            "name": "projectKeys",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Comma-separated list of project keys."
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "String used to filter users by name/email."
+          },
+          {
+            "name": "startAt",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 50
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assignable users retrieved"
           }
         }
-      },
-    "/issuetype": {
+      }
+    },
+    "/3/issuetype": {
       "get": {
         "summary": "List issue types",
         "operationId": "ListIssueTypes",
@@ -338,7 +338,7 @@
         }
       }
     },
-    "/priority": {
+    "/3/priority": {
       "get": {
         "summary": "List priorities",
         "operationId": "ListPriorities",
@@ -349,7 +349,7 @@
         }
       }
     },
-    "/status": {
+    "/3/status": {
       "get": {
         "summary": "List statuses",
         "operationId": "ListStatuses",
@@ -360,7 +360,7 @@
         }
       }
     },
-    "/attachment/content/{id}": {
+    "/3/attachment/content/{id}": {
       "get": {
       "summary": "Get attachment content",
       "description": "Download the content of an attachment by its ID.",
@@ -387,7 +387,7 @@
         }
       }
     },
-    "/myself": {
+    "/3/myself": {
       "get": {
         "summary": "Get current user details",
         "description": "Returns details for the currently authenticated user.",
@@ -395,6 +395,32 @@
         "responses": {
           "200": {
             "description": "Current user details returned"
+          }
+        }
+      }
+    },
+    "/3/issue/createmeta/{projectIdOrKey}/issuetypes/{issueTypeId}": {
+      "get": {
+        "summary": "Get issue creation metadata (fields and values)",
+        "description": "Retrieve metadata about required fields and possible values for creating issues in a project and issue type.",
+        "operationId": "GetIssueCreateMetaV3",
+        "parameters": [
+          {
+            "name": "projectIdOrKey",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "issueTypeId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata retrieved"
           }
         }
       }
